@@ -1,3 +1,5 @@
-<resources>
-    <string name="app_name">data_finder</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="name">DataFinder(%1$s)</string>
+    <string name="demon_process">DataFinder守护进程</string>
+    <string name="demon_process_sub_content" tools:ignore="ExtraTranslation">running</string>
 </resources>

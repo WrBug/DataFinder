@@ -1,7 +1,5 @@
 package com.wrbug.datafinder.server.vo;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 
 /**
@@ -18,6 +16,7 @@ public abstract class BaseFileInfo implements IFileInfo {
 
     public BaseFileInfo(File path) {
         this.file = path;
+        this.name = path.getName();
         this.path = file.getAbsolutePath();
         type = path.isDirectory() ? FileType.DIRECTORY : FileType.FILE;
     }
