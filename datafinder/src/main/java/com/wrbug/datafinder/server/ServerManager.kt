@@ -34,7 +34,7 @@ class ServerManager {
 
     var mServer: Server? = null
 
-    private var listener: Server.ServerListener? = null
+    private var listeners = ArrayList<ServerStatusListener>()
     private fun getServer(): Server {
         if (mServer == null) {
             mServer = AndServer.serverBuilder(context)
@@ -42,15 +42,22 @@ class ServerManager {
                 .listener(
                     object : Server.ServerListener {
                         override fun onException(e: Exception?) {
-                            listener?.onException(e)
+                            listeners.forEach {
+                                it.onException(e)
+                            }
                         }
 
                         override fun onStarted() {
-                            listener?.onStarted()
+                            listeners.forEach {
+                                it.onStarted()
+                            }
                         }
 
                         override fun onStopped() {
-                            listener?.onStopped()
+                            mServer = null
+                            listeners.forEach {
+                                it.onStopped()
+                            }
                         }
 
                     })
@@ -62,9 +69,17 @@ class ServerManager {
     }
 
 
-    fun setListener(listener: Server.ServerListener?): ServerManager {
-        this.listener = listener
+    fun addListener(listener: ServerStatusListener?): ServerManager {
+        if (listener != null) {
+            listeners.add(listener)
+        }
         return this
+    }
+
+    fun removeListener(listener: ServerStatusListener?) {
+        if (listener != null) {
+            listeners.remove(listener)
+        }
     }
 
     fun startServer(): ServerManager {
@@ -79,5 +94,10 @@ class ServerManager {
             getServer().shutdown()
         } else {
         }
+    }
+
+    fun restartServer() {
+        stopServer()
+        startServer()
     }
 }

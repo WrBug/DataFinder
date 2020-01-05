@@ -12,9 +12,10 @@ import androidx.core.app.NotificationCompat
 import com.wrbug.datafinder.R
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.server.ServerManager
+import com.wrbug.datafinder.server.ServerStatus
+import com.wrbug.datafinder.server.ServerStatusListener
 import com.wrbug.datafinder.ui.SettingActivity
 import com.wrbug.datafinder.util.NetWorkUtils
-import com.yanzhenjie.andserver.Server
 import java.lang.Exception
 import kotlin.concurrent.thread
 
@@ -30,6 +31,9 @@ import kotlin.concurrent.thread
 class DataFinderService : Service() {
     companion object {
         private const val TAG = "DataFinderService"
+        private const val ACTION_START_SERVER = "ACTION_START_SERVER"
+        private const val ACTION_RESTART_SERVER = "ACTION_RESTART_SERVER"
+        private const val ACTION_STOP_SERVER = "ACTION_STOP_SERVER"
         private const val CHANNEL_ID = "DEMON"
         fun start(context: Context) {
             if (Build.VERSION.SDK_INT >= 26) {//Android8.0
@@ -42,25 +46,38 @@ class DataFinderService : Service() {
         fun stop(context: Context) {
             context.stopService(Intent(context, DataFinderService::class.java))
         }
+
+        fun startServer(context: Context) {
+            context.sendBroadcast(Intent(ACTION_START_SERVER))
+        }
+
+        fun stopServer(context: Context) {
+            context.sendBroadcast(Intent(ACTION_STOP_SERVER))
+        }
+
+        fun restartServer(context: Context) {
+            context.sendBroadcast(Intent(ACTION_RESTART_SERVER))
+        }
     }
 
     private var serverStatus = ServerStatus.Stop
     private lateinit var notification: Notification
     override fun onBind(intent: Intent): IBinder? = null
-
+    private var restart = false
     override fun onCreate() {
         super.onCreate()
         registerReceiver()
+        initServer()
         startServer()
     }
 
-    private fun startServer() {
+    private fun initServer() {
         ServerManager.init(applicationContext)
-        ServerManager.instance.setListener(object : Server.ServerListener {
+        ServerManager.instance.addListener(object : ServerStatusListener {
             override fun onException(e: Exception?) {
                 Log.e(TAG, "onServerException", e)
                 updateNotification()
-                updateNotification(ServerStatus.LunchFailed)
+                updateNotification(ServerStatus.StartFailed)
             }
 
             override fun onStarted() {
@@ -71,11 +88,31 @@ class DataFinderService : Service() {
             override fun onStopped() {
                 Log.i(TAG, "onServerStopped")
                 updateNotification(ServerStatus.Stop)
+                if (restart) {
+                    restart = false
+                    startServer()
+                }
             }
 
         })
+    }
+
+    private fun startServer() {
         thread {
             ServerManager.instance.startServer()
+        }
+    }
+
+    private fun stopServer() {
+        thread {
+            ServerManager.instance.stopServer()
+        }
+    }
+
+    private fun restartServer() {
+        thread {
+            restart = true
+            ServerManager.instance.stopServer()
         }
     }
 
@@ -121,6 +158,13 @@ class DataFinderService : Service() {
             networkStateReceiver,
             IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
+        registerReceiver(
+            toggleServerReceiver,
+            IntentFilter(ACTION_START_SERVER).apply {
+                addAction(ACTION_STOP_SERVER)
+                addAction(ACTION_RESTART_SERVER)
+            }
+        )
     }
 
     private fun updateNotification(status: ServerStatus = ServerStatus.Stop) {
@@ -134,7 +178,7 @@ class DataFinderService : Service() {
         val statusText = when (status) {
             ServerStatus.Stop -> R.string.demon_process_sub_content_stop
             ServerStatus.Running -> R.string.demon_process_sub_content_running
-            ServerStatus.LunchFailed -> R.string.demon_process_sub_content_lunch_failed
+            ServerStatus.StartFailed -> R.string.demon_process_sub_content_start_failed
         }
         val pendingIntent =
             PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
@@ -158,9 +202,21 @@ class DataFinderService : Service() {
         }
     }
 
-    enum class ServerStatus {
-        Running,
-        Stop,
-        LunchFailed
+    private val toggleServerReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                ACTION_START_SERVER -> {
+                    startServer()
+                }
+                ACTION_STOP_SERVER -> {
+                    stopServer()
+                }
+                ACTION_RESTART_SERVER -> {
+                    restartServer()
+                }
+            }
+        }
     }
+
+
 }

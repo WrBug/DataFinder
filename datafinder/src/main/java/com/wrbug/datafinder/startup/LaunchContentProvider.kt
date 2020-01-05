@@ -6,6 +6,7 @@ import android.net.Uri
 import android.util.Log
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.data.GlobalEnv
+import com.wrbug.datafinder.util.FlexibleToastUtils
 
 class LaunchContentProvider : ContentProvider() {
 
@@ -15,6 +16,7 @@ class LaunchContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         Log.i("AAAAAA", "LaunchContentProvider")
         GlobalEnv.init(context.applicationContext)
+        FlexibleToastUtils.init(context.applicationContext)
         ConfigDataManager.init(context.applicationContext)
         DataFinderService.start(context)
         return true
