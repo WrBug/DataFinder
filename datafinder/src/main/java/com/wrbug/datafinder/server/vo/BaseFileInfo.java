@@ -1,5 +1,6 @@
 package com.wrbug.datafinder.server.vo;
 
+import com.wrbug.datafinder.server.type.FileType;
 import java.io.File;
 
 /**
@@ -37,13 +38,5 @@ public abstract class BaseFileInfo implements IFileInfo {
         this.type = type;
     }
 
-    public enum FileType {
-        FILE(0),
-        DIRECTORY(1);
-        private int type;
 
-        FileType(int type) {
-            this.type = type;
-        }
-    }
 }

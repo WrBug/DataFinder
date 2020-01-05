@@ -21,25 +21,7 @@ class LaunchContentProvider : ContentProvider() {
         Log.i("AAAAAA", "LaunchContentProvider")
         GlobalEnv.init(context.applicationContext)
         ConfigDataManager.init(context.applicationContext)
-        ServerManager.init(context.applicationContext)
         DataFinderService.start(context)
-        ServerManager.instance.setListener(object : Server.ServerListener {
-            override fun onException(e: Exception?) {
-                e?.printStackTrace()
-            }
-
-            override fun onStarted() {
-                Log.i("AAAAA", "onStarted")
-            }
-
-            override fun onStopped() {
-                Log.i("AAAAA", "onStopped")
-            }
-
-        })
-        thread {
-            ServerManager.instance.startServer()
-        }
         return true
     }
 

@@ -1,6 +1,8 @@
 package com.wrbug.datafinder.server
 
+import android.annotation.SuppressLint
 import android.content.Context
+import com.wrbug.datafinder.data.ConfigDataManager
 import com.yanzhenjie.andserver.AndServer
 import com.yanzhenjie.andserver.Server
 import java.lang.Exception
@@ -19,13 +21,14 @@ import java.util.concurrent.TimeUnit
 class ServerManager {
 
     companion object {
-        lateinit var context: Context
+        @SuppressLint("StaticFieldLeak")
+        private lateinit var context: Context
         val instance: ServerManager by lazy {
             ServerManager()
         }
 
         fun init(ctx: Context) {
-            context = ctx
+            context = ctx.applicationContext
         }
     }
 
@@ -51,7 +54,7 @@ class ServerManager {
                         }
 
                     })
-                .port(1222)
+                .port(ConfigDataManager.getServerPort())
                 .timeout(10, TimeUnit.SECONDS)
                 .build()
         }
