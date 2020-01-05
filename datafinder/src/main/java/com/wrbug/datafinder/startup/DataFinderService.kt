@@ -8,11 +8,9 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.*
 import android.util.Log
-import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.wrbug.datafinder.R
 import com.wrbug.datafinder.data.ConfigDataManager
-import com.wrbug.datafinder.data.GlobalEnv
 import com.wrbug.datafinder.server.ServerManager
 import com.wrbug.datafinder.ui.SettingActivity
 import com.wrbug.datafinder.util.NetWorkUtils

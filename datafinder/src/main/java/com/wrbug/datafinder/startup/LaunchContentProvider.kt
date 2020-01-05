@@ -2,15 +2,10 @@ package com.wrbug.datafinder.startup
 
 import android.content.ContentProvider
 import android.content.ContentValues
-import android.database.Cursor
 import android.net.Uri
 import android.util.Log
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.data.GlobalEnv
-import com.wrbug.datafinder.server.ServerManager
-import com.yanzhenjie.andserver.Server
-import java.lang.Exception
-import kotlin.concurrent.thread
 
 class LaunchContentProvider : ContentProvider() {
 
