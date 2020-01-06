@@ -2,6 +2,7 @@ package com.wrbug.datafinder.server.vo;
 
 import com.wrbug.datafinder.preview.PreviewManager;
 import com.wrbug.datafinder.server.download.DownloadCache;
+import com.wrbug.datafinder.util.MD5Utils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +22,7 @@ public class FileInfo extends BaseFileInfo {
     private boolean preview;
     private long size;
     private int downloadId;
+    private String md5;
 
     public FileInfo(File path) {
         super(path);
@@ -30,6 +32,7 @@ public class FileInfo extends BaseFileInfo {
         size = path.length();
         preview = PreviewManager.match(path);
         downloadId = DownloadCache.getDownloadId(file);
+        md5 = MD5Utils.encode(path);
     }
 
     public String getName() {
