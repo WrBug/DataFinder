@@ -1,5 +1,8 @@
 package com.wrbug.datafinder.server.vo;
 
+import com.wrbug.datafinder.preview.PreviewManager;
+import com.wrbug.datafinder.server.download.DownloadCache;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -15,7 +18,9 @@ public class FileInfo extends BaseFileInfo {
     private boolean readable;
     private boolean writable;
     private long modifyTime;
+    private boolean preview;
     private long size;
+    private int downloadId;
 
     public FileInfo(File path) {
         super(path);
@@ -23,6 +28,8 @@ public class FileInfo extends BaseFileInfo {
         writable = path.canWrite();
         modifyTime = path.lastModified();
         size = path.length();
+        preview = PreviewManager.match(path);
+        downloadId = DownloadCache.getDownloadId(file);
     }
 
     public String getName() {
@@ -42,5 +49,21 @@ public class FileInfo extends BaseFileInfo {
     @Override
     public long getSize() {
         return size;
+    }
+
+    public boolean isPreview() {
+        return preview;
+    }
+
+    public void setPreview(boolean preview) {
+        this.preview = preview;
+    }
+
+    public int getDownloadId() {
+        return downloadId;
+    }
+
+    public void setDownloadId(int downloadId) {
+        this.downloadId = downloadId;
     }
 }

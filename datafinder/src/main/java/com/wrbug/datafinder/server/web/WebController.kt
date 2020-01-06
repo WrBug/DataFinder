@@ -1,6 +1,7 @@
 package com.wrbug.datafinder.server.web
 
 import android.content.Context
+import com.wrbug.datafinder.util.forceDelete
 import com.yanzhenjie.andserver.framework.website.StorageWebsite
 import java.io.File
 
@@ -17,15 +18,19 @@ class WebController(private val context: Context?) : StorageWebsite(getPath(cont
     companion object {
         private const val WEB_PATH = "web"
         private fun getPath(context: Context?): String =
-            File(context?.cacheDir, WEB_PATH).absolutePath ?: ""
+            File(context?.cacheDir, WEB_PATH).run {
+                forceDelete()
+                absolutePath
+            } ?: ""
     }
 
     init {
         val list = getList("web")
+        val dir=getPath(context)
         list.forEach {
             val dst = if (it.startsWith("web/")) it.substring(4) else it
             context?.assets?.open(it)?.readBytes()?.let { data ->
-                File(getPath(context), dst).apply {
+                File(dir, dst).apply {
                     if (!parentFile.exists()) {
                         parentFile.mkdirs()
                     }
