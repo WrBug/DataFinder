@@ -1,11 +1,13 @@
 package com.wrbug.datafinder.server.dao.table;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class DownloadInfo {
+    @Id
     @Property(nameInDb = "downloadId")
     private Long downloadId;
     @Property(nameInDb = "path")
@@ -30,4 +32,6 @@ public class DownloadInfo {
     public void setPath(String path) {
         this.path = path;
     }
+    
+   
 }

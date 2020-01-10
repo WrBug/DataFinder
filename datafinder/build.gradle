@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.1"
@@ -25,6 +25,12 @@ android {
         }
     }
 
+}
+
+
+greendao {
+    schemaVersion 1
+    daoPackage 'com.wrbug.datafinder.server.dao'
 }
 
 dependencies {

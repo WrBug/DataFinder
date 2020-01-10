@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.wrbug.datafinder.server.dao.table.DaoMaster;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -16,14 +15,9 @@ public class DBOpenHelper extends DaoMaster.OpenHelper {
         super(context, DB_NAME);
     }
 
-    public DBOpenHelper(Context context, String dbName) {
-        super(context, dbName);
-    }
-
     @Override
     public void onCreate(Database db) {
-//        super.onCreate(db);
-        DaoMaster.createAllTables(db, true);
+        super.onCreate(db);
     }
 
     @Override

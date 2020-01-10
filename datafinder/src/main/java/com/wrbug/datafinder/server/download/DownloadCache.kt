@@ -1,6 +1,7 @@
 package com.wrbug.datafinder.server.download
 
 import androidx.collection.LruCache
+import com.wrbug.datafinder.server.dao.DBManager
 import java.io.File
 
 object DownloadCache {
@@ -8,19 +9,26 @@ object DownloadCache {
 
     @JvmStatic
     fun getDownloadId(file: File): Int {
-        var id = file.absolutePath.hashCode()
-        map.get(id)?.apply {
-            if (file.equals(this).not()) {
-                id += file.name.hashCode()
-            }
-        }
+        val id = file.hashCode()
         map.put(id, file)
+        DBManager.saveDownloadFile(id, file)
         return id
     }
 
     @JvmStatic
     fun getFile(id: Int): File? {
-        return map[id]
+
+        var file = map[id]
+        if (file != null) {
+            return file
+        }
+        val path = DBManager.getDownloadFile(id)?.path
+        if (path.isNullOrEmpty()) {
+            return null
+        }
+        file = File(path)
+        map.put(id, file)
+        return file
     }
 
 }
