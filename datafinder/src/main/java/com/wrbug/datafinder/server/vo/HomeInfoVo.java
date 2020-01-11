@@ -1,15 +1,21 @@
 package com.wrbug.datafinder.server.vo;
 
+import com.google.gson.annotations.SerializedName;
 import com.wrbug.datafinder.server.type.FileType;
 import com.wrbug.datafinder.server.type.IconType;
 
 import java.io.File;
 
 public class HomeInfoVo {
+    @SerializedName("name")
     private String name;
+    @SerializedName("icon")
     private IconType icon;
+    @SerializedName("path")
     private String path;
+    @SerializedName("fileType")
     private FileType fileType;
+    @SerializedName("readable")
     private boolean readable;
 
     public String getName() {

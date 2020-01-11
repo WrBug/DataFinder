@@ -18,8 +18,11 @@ import java.lang.Exception
  */
 @Controller
 class DownloadController {
+    companion object {
+        const val downloadPath = "/download"
+    }
 
-    @GetMapping("/download/{fileName}")
+    @GetMapping("${downloadPath}/{fileName}")
     fun download(
         @PathVariable("fileName") fileName: String, @QueryParam("id") downloadId: String, response: HttpResponse
     ) {

@@ -2,6 +2,8 @@ package com.wrbug.datafinder.server.vo;
 
 import androidx.annotation.Keep;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -13,6 +15,7 @@ import java.io.File;
  * description：
  */
 public class DirectoryInfo extends BaseFileInfo {
+    @SerializedName("children")
     private ChildrenInfo children;
 
     public DirectoryInfo(File path) {
@@ -33,9 +36,13 @@ public class DirectoryInfo extends BaseFileInfo {
 
     @Keep
     public static class ChildrenInfo {
+        @SerializedName("total")
         private int total;
+        @SerializedName("directoryCount")
         private int directoryCount;
+        @SerializedName("fileCount")
         private int fileCount;
+        @SerializedName("size")
         private long size;
 
         ChildrenInfo(File file) {

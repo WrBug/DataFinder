@@ -1,6 +1,8 @@
 package com.wrbug.datafinder.server.vo;
 
+import com.google.gson.annotations.SerializedName;
 import com.wrbug.datafinder.preview.PreviewManager;
+import com.wrbug.datafinder.server.api.DownloadController;
 import com.wrbug.datafinder.server.download.DownloadCache;
 import com.wrbug.datafinder.util.MD5Utils;
 
@@ -15,14 +17,20 @@ import java.io.File;
  * description：
  */
 public class FileInfo extends BaseFileInfo {
-
+    @SerializedName("readable")
     private boolean readable;
+    @SerializedName("writable")
     private boolean writable;
+    @SerializedName("modifyTime")
     private long modifyTime;
+    @SerializedName("preview")
     private boolean preview;
+    @SerializedName("size")
     private long size;
-    private int downloadId;
+    @SerializedName("md5")
     private String md5;
+    @SerializedName("downloadUrl")
+    private String downloadUrl;
 
     public FileInfo(File path) {
         super(path);
@@ -31,8 +39,13 @@ public class FileInfo extends BaseFileInfo {
         modifyTime = path.lastModified();
         size = path.length();
         preview = PreviewManager.match(path);
-        downloadId = DownloadCache.getDownloadId(file);
+        createDownloadUrl();
         md5 = MD5Utils.encode(path);
+    }
+
+    private void createDownloadUrl() {
+        int downloadId = DownloadCache.getDownloadId(file);
+        downloadUrl = DownloadController.downloadPath + "/" + file.getName() + "?id=" + downloadId;
     }
 
     public String getName() {
@@ -62,11 +75,43 @@ public class FileInfo extends BaseFileInfo {
         this.preview = preview;
     }
 
-    public int getDownloadId() {
-        return downloadId;
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
 
-    public void setDownloadId(int downloadId) {
-        this.downloadId = downloadId;
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public boolean isReadable() {
+        return readable;
+    }
+
+    public void setReadable(boolean readable) {
+        this.readable = readable;
+    }
+
+    public boolean isWritable() {
+        return writable;
+    }
+
+    public void setWritable(boolean writable) {
+        this.writable = writable;
+    }
+
+    public long getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(long modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }
