@@ -50,7 +50,7 @@ class DataDirInfoProvider : HomeInfoProvider {
     }
 
     private fun buildSharedPreferenceInfo() = HomeInfoVo().apply {
-        name = "Xml"
+        name = "SharedPreference"
         icon = IconType.Xml
         setPath(File(dataDir, "shared_prefs"))
     }
