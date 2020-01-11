@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class: DirectoryInfo
@@ -15,12 +17,31 @@ import java.io.File;
  * description：
  */
 public class DirectoryInfo extends BaseFileInfo {
+    @SerializedName("info")
+    private ChildrenInfo info;
+    @SerializedName("parent")
+    private String parent;
     @SerializedName("children")
-    private ChildrenInfo children;
+    private List<BaseFileInfo> children;
 
     public DirectoryInfo(File path) {
+        this(path, true);
+    }
+
+    private DirectoryInfo(File path, boolean calcChildren) {
         super(path);
-        children = new ChildrenInfo(path);
+        parent = path.getParent();
+        if (calcChildren) {
+            info = new ChildrenInfo(path);
+        }
+    }
+
+    public List<BaseFileInfo> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<BaseFileInfo> children) {
+        this.children = children;
     }
 
     @NotNull
@@ -31,11 +52,11 @@ public class DirectoryInfo extends BaseFileInfo {
 
     @Override
     public long getSize() {
-        return children.size;
+        return info.size;
     }
 
     @Keep
-    public static class ChildrenInfo {
+    public class ChildrenInfo {
         @SerializedName("total")
         private int total;
         @SerializedName("directoryCount")
@@ -46,12 +67,15 @@ public class DirectoryInfo extends BaseFileInfo {
         private long size;
 
         ChildrenInfo(File file) {
+            children = new ArrayList<>();
             total = file.listFiles().length;
             for (File listFile : file.listFiles()) {
                 if (listFile.isFile()) {
-                    size = listFile.length();
+                    children.add(new FileInfo(listFile));
+                    size += listFile.length();
                     fileCount++;
                 } else {
+                    children.add(new DirectoryInfo(listFile, false));
                     directoryCount++;
                 }
             }
