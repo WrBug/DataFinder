@@ -1,6 +1,7 @@
 package com.wrbug.datafinder.server.dao
 
 import com.wrbug.datafinder.server.dao.table.DownloadInfo
+import com.wrbug.datafinder.server.dao.table.UserHistoryInfo
 import java.io.File
 
 object DBManager {
@@ -23,5 +24,32 @@ object DBManager {
         val info = DataFinderDB.getDownloadInfoDao()?.queryBuilder()
             ?.where(DownloadInfoDao.Properties.DownloadId.eq(downloadId.toLong()))?.unique()
         return info
+    }
+
+    fun saveUserHistory(deviceId: String, file: String) {
+        if (file.isEmpty() || deviceId.isEmpty()) {
+            return
+        }
+        val info = UserHistoryInfo().apply {
+            hId = deviceId + file
+            this.deviceId = deviceId
+            this.path = file
+            this.updateTime = System.currentTimeMillis()
+        }
+        DataFinderDB.getUserHistoryInfoDao()?.insertOrReplace(info)
+    }
+
+    fun getUserHistoryList(deviceId: String, size: Int = 20): List<UserHistoryInfo> {
+        val data = DataFinderDB.getUserHistoryInfoDao()?.queryBuilder()
+            ?.where(UserHistoryInfoDao.Properties.DeviceId.eq(deviceId))
+            ?.orderDesc(UserHistoryInfoDao.Properties.UpdateTime)?.limit(size)?.list()
+            ?: emptyList()
+        return data.filter {
+            File(it.path).exists().apply {
+                if (this.not()) {
+                    DataFinderDB.getUserHistoryInfoDao()?.delete(it)
+                }
+            }
+        }
     }
 }

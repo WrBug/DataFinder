@@ -20,4 +20,8 @@ object DataFinderDB {
         return daoSession.downloadInfoDao
     }
 
+    fun getUserHistoryInfoDao():UserHistoryInfoDao?{
+        return daoSession.userHistoryInfoDao
+    }
+
 }

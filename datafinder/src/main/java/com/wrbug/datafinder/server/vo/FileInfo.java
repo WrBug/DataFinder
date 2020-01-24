@@ -33,6 +33,10 @@ public class FileInfo extends BaseFileInfo {
     private String downloadUrl;
 
     public FileInfo(File path) {
+        this(path, true);
+    }
+
+    public FileInfo(File path, boolean calcMd5) {
         super(path);
         readable = path.canRead();
         writable = path.canWrite();
@@ -40,7 +44,9 @@ public class FileInfo extends BaseFileInfo {
         size = path.length();
         preview = PreviewManager.match(path);
         createDownloadUrl();
-        md5 = MD5Utils.encode(path);
+        if (calcMd5) {
+            md5 = MD5Utils.encode(path);
+        }
     }
 
     private void createDownloadUrl() {

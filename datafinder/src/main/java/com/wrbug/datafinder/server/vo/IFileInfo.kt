@@ -15,6 +15,7 @@ interface IFileInfo {
     fun getSize(): Long
 
     companion object {
+        fun getFile(file: String) = getFile(File(file))
         fun getFile(file: File): IFileInfo {
             if (file.isFile) {
                 return FileInfo(file)

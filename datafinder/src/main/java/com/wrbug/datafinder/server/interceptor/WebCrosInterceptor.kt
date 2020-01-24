@@ -25,13 +25,13 @@ class WebCrosInterceptor : HandlerInterceptor {
         handler: RequestHandler
     ): Boolean {
         response.setHeader("access-control-allow-origin", request.getHeader("Origin") ?: "")
+        response.setHeader("access-control-allow-credentials", "true")
         if (request.method == HttpMethod.OPTIONS) {
             response.setHeader("access-control-allow-methods", "GET,POST,DELETE,PUT")
             response.setHeader(
                 "access-control-allow-headers",
                 request.getHeader("Access-Control-Request-Headers") ?: ""
             )
-            response.setHeader("access-control-allow-credentials", "true")
             response.setHeader("access-control-max-age", "3600")
             response.setHeader("allow", "GET, HEAD, POST, PUT, DELETE, OPTIONS, PATCH")
             return true

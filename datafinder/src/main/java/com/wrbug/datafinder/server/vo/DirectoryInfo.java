@@ -71,7 +71,7 @@ public class DirectoryInfo extends BaseFileInfo {
             total = file.listFiles().length;
             for (File listFile : file.listFiles()) {
                 if (listFile.isFile()) {
-                    children.add(new FileInfo(listFile));
+                    children.add(new FileInfo(listFile, false));
                     size += listFile.length();
                     fileCount++;
                 } else {

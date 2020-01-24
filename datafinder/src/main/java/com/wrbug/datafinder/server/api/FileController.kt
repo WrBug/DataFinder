@@ -1,6 +1,8 @@
 package com.wrbug.datafinder.server.api
 
 import android.text.TextUtils
+import com.wrbug.datafinder.server.cookie.CookieManager
+import com.wrbug.datafinder.server.dao.DBManager
 import com.wrbug.datafinder.server.data.home.HomeInfoListProvider
 import com.wrbug.datafinder.server.type.FileType
 import com.wrbug.datafinder.server.vo.DirectoryInfo
@@ -11,6 +13,7 @@ import com.yanzhenjie.andserver.annotation.RequestMapping
 import com.yanzhenjie.andserver.annotation.RequestMethod
 import com.yanzhenjie.andserver.annotation.RequestParam
 import com.yanzhenjie.andserver.annotation.RestController
+import com.yanzhenjie.andserver.http.HttpRequest
 import java.io.File
 import java.lang.Exception
 
@@ -36,14 +39,24 @@ class FileController {
     }
 
     @RequestMapping(
+        "/api/history",
+        method = [RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS]
+    )
+    fun getHistory(httpRequest: HttpRequest): List<IFileInfo> {
+        return DBManager.getUserHistoryList(CookieManager.getDeviceId(httpRequest))
+            .map { IFileInfo.getFile(it.path) }
+    }
+
+    @RequestMapping(
         "/api/get_file_info",
         method = [RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS]
     )
-    fun getFileInfo(@RequestParam("file") filePath: String): FileInfo {
+    fun getFileInfo(@RequestParam("file") filePath: String, httpRequest: HttpRequest): FileInfo {
         return File(filePath).run {
             if (isFile.not()) {
                 throw Exception("获取文件错误")
             }
+            DBManager.saveUserHistory(CookieManager.getDeviceId(httpRequest), filePath)
             FileInfo(this)
         }
     }

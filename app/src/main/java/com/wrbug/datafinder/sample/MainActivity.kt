@@ -1,13 +1,7 @@
 package com.wrbug.datafinder.sample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.wrbug.datafinder.server.ServerManager
-import com.yanzhenjie.andserver.Server
-import java.io.File
-import java.lang.Exception
-import kotlin.concurrent.thread
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
