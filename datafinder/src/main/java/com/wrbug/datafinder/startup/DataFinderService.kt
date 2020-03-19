@@ -7,8 +7,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.*
+import android.support.v4.app.NotificationCompat
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import com.wrbug.datafinder.R
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.server.ServerManager

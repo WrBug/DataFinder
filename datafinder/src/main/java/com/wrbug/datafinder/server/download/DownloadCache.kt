@@ -1,6 +1,6 @@
 package com.wrbug.datafinder.server.download
 
-import androidx.collection.LruCache
+import android.support.v4.util.LruCache
 import com.wrbug.datafinder.server.dao.DBManager
 import java.io.File
 

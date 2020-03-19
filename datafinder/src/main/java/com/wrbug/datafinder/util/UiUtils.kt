@@ -2,9 +2,9 @@ package com.wrbug.datafinder.util
 
 import android.app.Dialog
 import android.content.Context
+import android.support.v4.app.Fragment
 import android.util.TypedValue
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.wrbug.datafinder.data.GlobalEnv
 
 fun Context.dp2px(dpVal: Float): Int = UiUtils.dp2px(dpVal)

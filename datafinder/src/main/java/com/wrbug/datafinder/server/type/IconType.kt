@@ -1,6 +1,6 @@
 package com.wrbug.datafinder.server.type
 
-import androidx.annotation.Keep
+import android.support.annotation.Keep
 import java.io.File
 
 /**

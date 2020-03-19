@@ -1,6 +1,7 @@
 package com.wrbug.datafinder.server.vo;
 
-import androidx.annotation.Keep;
+
+import android.support.annotation.Keep;
 
 import com.google.gson.annotations.SerializedName;
 
