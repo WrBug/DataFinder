@@ -1,11 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="name">DataFinder(%1$s)</string>
+    <string name="data_finder_notification_name">DataFinder(%1$s)</string>
     <string name="demon_process">DataFinder守护进程</string>
     <string name="demon_process_sub_content_running" tools:ignore="ExtraTranslation">运行中</string>
     <string name="demon_process_sub_content_stop" tools:ignore="ExtraTranslation">未运行</string>
     <string name="demon_process_sub_content_start_failed" tools:ignore="ExtraTranslation">启动失败</string>
-    <string name="save">保存</string>
-    <string name="start_server">启动服务</string>
-    <string name="stop_server">停止服务</string>
-    <string name="restart_server">重启服务</string>
+    <string name="data_finder_save">保存</string>
+    <string name="data_finder_start_server">启动服务</string>
+    <string name="data_finder_stop_server">停止服务</string>
+    <string name="data_finder_restart_server">重启服务</string>
 </resources>

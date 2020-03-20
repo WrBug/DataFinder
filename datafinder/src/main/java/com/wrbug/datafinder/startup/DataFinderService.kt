@@ -185,7 +185,7 @@ class DataFinderService : Service() {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setAutoCancel(false)
             .setContentIntent(pendingIntent)
-            .setContentTitle(getString(R.string.name, label))
+            .setContentTitle(getString(R.string.data_finder_notification_name, label))
             .setContentText(content)
             .setSubText(getString(statusText))
             .setSmallIcon(R.drawable.ic_launcher)
@@ -193,7 +193,8 @@ class DataFinderService : Service() {
         notification = builder.build()
         notification.flags = Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR or
                 Notification.FLAG_FOREGROUND_SERVICE
-        startForeground(0x10000, notification)
+        val id = (packageName.hashCode() and 53535) + 10000
+        startForeground(id, notification)
     }
 
     private val networkStateReceiver = object : BroadcastReceiver() {

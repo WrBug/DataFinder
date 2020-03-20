@@ -7,12 +7,13 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <application>
         <activity android:name=".ui.SettingActivity"></activity>
 
         <provider
             android:name=".startup.LaunchContentProvider"
-            android:authorities="launch"
+            android:authorities="${applicationId}.launch"
             android:enabled="true"
             android:exported="true" />
 
