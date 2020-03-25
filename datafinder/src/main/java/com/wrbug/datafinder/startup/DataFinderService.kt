@@ -61,7 +61,6 @@ class DataFinderService : Service() {
     }
 
     private var serverStatus = ServerStatus.Stop
-    private lateinit var notification: Notification
     override fun onBind(intent: Intent): IBinder? = null
     private var restart = false
     override fun onCreate() {
@@ -117,7 +116,11 @@ class DataFinderService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        initNotification()
+        try {
+            initNotification()
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -190,7 +193,7 @@ class DataFinderService : Service() {
             .setSubText(getString(statusText))
             .setSmallIcon(R.drawable.ic_launcher)
             .setVibrate(null)
-        notification = builder.build()
+        val notification = builder.build()
         notification.flags = Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR or
                 Notification.FLAG_FOREGROUND_SERVICE
         val id = (packageName.hashCode() and 53535) + 10000

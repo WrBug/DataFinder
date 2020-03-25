@@ -14,14 +14,12 @@ class LaunchContentProvider : ContentProvider() {
     override fun getType(uri: Uri) = uri.scheme
     override fun insert(uri: Uri, values: ContentValues?) = uri
     override fun onCreate(): Boolean {
-        Log.i("AAAAAA", "LaunchContentProvider")
         GlobalEnv.init(context.applicationContext)
         FlexibleToastUtils.init(context.applicationContext)
         ConfigDataManager.init(context.applicationContext)
         DataFinderService.start(context)
         return true
     }
-
     override fun query(
         uri: Uri, projection: Array<String>?, selection: String?,
         selectionArgs: Array<String>?, sortOrder: String?
