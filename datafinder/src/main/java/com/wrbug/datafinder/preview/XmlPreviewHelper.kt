@@ -11,12 +11,12 @@ import java.io.File
  *  description：
  *
  */
-class DatabasePreviewHelper : PreviewHelper<Any> {
+class XmlPreviewHelper : PreviewHelper<Any> {
     override fun match(file: File): Boolean {
-        return file.absolutePath.toLowerCase().endsWith(".db")
+        return file.absolutePath.toLowerCase().endsWith(".xml")
     }
 
     override fun getRaw(file: File): String {
-        return file.toString()
+        return file.readText()
     }
 }

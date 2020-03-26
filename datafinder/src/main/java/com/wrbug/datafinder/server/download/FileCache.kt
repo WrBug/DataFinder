@@ -4,11 +4,11 @@ import android.support.v4.util.LruCache
 import com.wrbug.datafinder.server.dao.DBManager
 import java.io.File
 
-object DownloadCache {
+object FileCache {
     private val map = LruCache<Int, File>(1000)
 
     @JvmStatic
-    fun getDownloadId(file: File): Int {
+    fun getId(file: File): Int {
         val id = file.hashCode()
         map.put(id, file)
         DBManager.saveDownloadFile(id, file)

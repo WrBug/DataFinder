@@ -1,14 +1,14 @@
 package com.wrbug.datafinder.server.api
 
 import android.text.TextUtils
+import com.wrbug.datafinder.preview.PreviewManager
 import com.wrbug.datafinder.server.cookie.CookieManager
 import com.wrbug.datafinder.server.dao.DBManager
 import com.wrbug.datafinder.server.data.home.HomeInfoListProvider
+import com.wrbug.datafinder.server.download.FileCache
 import com.wrbug.datafinder.server.type.FileType
-import com.wrbug.datafinder.server.vo.DirectoryInfo
-import com.wrbug.datafinder.server.vo.FileInfo
-import com.wrbug.datafinder.server.vo.HomeInfoVo
-import com.wrbug.datafinder.server.vo.IFileInfo
+import com.wrbug.datafinder.server.type.IconType
+import com.wrbug.datafinder.server.vo.*
 import com.yanzhenjie.andserver.annotation.RequestMapping
 import com.yanzhenjie.andserver.annotation.RequestMethod
 import com.yanzhenjie.andserver.annotation.RequestParam
@@ -59,6 +59,18 @@ class FileController {
             DBManager.saveUserHistory(CookieManager.getDeviceId(httpRequest), filePath)
             FileInfo(this)
         }
+    }
+
+    @RequestMapping(
+        "/api/get_file_preview",
+        method = [RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS]
+    )
+    fun getFilePreview(@RequestParam("id") fileId: String, httpRequest: HttpRequest): FilePreviewInfo {
+        val file = FileCache.getFile(fileId.toInt()) ?: throw Exception("获取文件错误")
+        val info = FilePreviewInfo()
+        info.type = IconType.get(file)
+        info.raw = PreviewManager.getRaw(file)
+        return info
     }
 
     @RequestMapping(

@@ -13,5 +13,5 @@ import java.io.File
 interface PreviewHelper<T> {
     fun match(file: File): Boolean
 
-    fun getData(file: File): T
+    fun getRaw(file: File): String
 }

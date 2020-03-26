@@ -116,11 +116,7 @@ class DataFinderService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        try {
-            initNotification()
-        } catch (e: Throwable) {
-            e.printStackTrace()
-        }
+        initNotification()
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -144,8 +140,8 @@ class DataFinderService : Service() {
     override fun onDestroy() {
         try {
             ServerManager.instance.stopServer()
-            unregisterReceiver()
             stopForeground(true)
+            unregisterReceiver()
         } catch (th: Throwable) {
 
         }
@@ -157,47 +153,59 @@ class DataFinderService : Service() {
     }
 
     private fun registerReceiver() {
-        registerReceiver(
-            networkStateReceiver,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
-        registerReceiver(
-            toggleServerReceiver,
-            IntentFilter(ACTION_START_SERVER).apply {
-                addAction(ACTION_STOP_SERVER)
-                addAction(ACTION_RESTART_SERVER)
-            }
-        )
+        try {
+            registerReceiver(
+                networkStateReceiver,
+                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            )
+            registerReceiver(
+                toggleServerReceiver,
+                IntentFilter(ACTION_START_SERVER).apply {
+                    addAction(ACTION_STOP_SERVER)
+                    addAction(ACTION_RESTART_SERVER)
+                }
+            )
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun updateNotification(status: ServerStatus = ServerStatus.Stop) {
-        serverStatus = status
-        val intent = Intent(this, SettingActivity::class.java)
-        val applicationInfo = packageManager.getApplicationInfo(packageName, 0)
-        val label = packageManager.getApplicationLabel(applicationInfo)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val content =
-            "http://${NetWorkUtils.getLocalIpAddress()}:${ConfigDataManager.getServerPort()}"
-        val statusText = when (status) {
-            ServerStatus.Stop -> R.string.demon_process_sub_content_stop
-            ServerStatus.Running -> R.string.demon_process_sub_content_running
-            ServerStatus.StartFailed -> R.string.demon_process_sub_content_start_failed
+        try {
+            serverStatus = status
+            val intent = Intent(this, SettingActivity::class.java)
+            val applicationInfo = packageManager.getApplicationInfo(packageName, 0)
+            val label = packageManager.getApplicationLabel(applicationInfo)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            val content =
+                "http://${NetWorkUtils.getLocalIpAddress()}:${ConfigDataManager.getServerPort()}"
+            val statusText = when (status) {
+                ServerStatus.Stop -> R.string.demon_process_sub_content_stop
+                ServerStatus.Running -> R.string.demon_process_sub_content_running
+                ServerStatus.StartFailed -> R.string.demon_process_sub_content_start_failed
+            }
+            val pendingIntent =
+                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setAutoCancel(false)
+                .setContentIntent(pendingIntent)
+                .setContentTitle(getString(R.string.data_finder_notification_name, label))
+                .setContentText(content)
+                .setSubText(getString(statusText))
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setVibrate(null)
+            val notification = builder.build()
+            notification.flags = Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR or
+                    Notification.FLAG_FOREGROUND_SERVICE
+            val id = (packageName.hashCode() and 53535) + 10000
+            startForeground(id, notification)
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            Log.e(TAG, "updateNotification error", e)
+            Log.i(TAG, "结束service")
+            stopSelf()
         }
-        val pendingIntent =
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setAutoCancel(false)
-            .setContentIntent(pendingIntent)
-            .setContentTitle(getString(R.string.data_finder_notification_name, label))
-            .setContentText(content)
-            .setSubText(getString(statusText))
-            .setSmallIcon(R.drawable.ic_launcher)
-            .setVibrate(null)
-        val notification = builder.build()
-        notification.flags = Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR or
-                Notification.FLAG_FOREGROUND_SERVICE
-        val id = (packageName.hashCode() and 53535) + 10000
-        startForeground(id, notification)
     }
 
     private val networkStateReceiver = object : BroadcastReceiver() {

@@ -3,7 +3,7 @@ package com.wrbug.datafinder.server.vo;
 import com.google.gson.annotations.SerializedName;
 import com.wrbug.datafinder.preview.PreviewManager;
 import com.wrbug.datafinder.server.api.DownloadController;
-import com.wrbug.datafinder.server.download.DownloadCache;
+import com.wrbug.datafinder.server.download.FileCache;
 import com.wrbug.datafinder.util.MD5Utils;
 
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +31,8 @@ public class FileInfo extends BaseFileInfo {
     private String md5;
     @SerializedName("downloadUrl")
     private String downloadUrl;
+    @SerializedName("fileId")
+    private int fileId;
 
     public FileInfo(File path) {
         this(path, true);
@@ -50,8 +52,17 @@ public class FileInfo extends BaseFileInfo {
     }
 
     private void createDownloadUrl() {
-        int downloadId = DownloadCache.getDownloadId(file);
+        int downloadId = FileCache.getId(file);
+        fileId = downloadId;
         downloadUrl = DownloadController.downloadPath + "/" + file.getName() + "?id=" + downloadId;
+    }
+
+    public int getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(int fileId) {
+        this.fileId = fileId;
     }
 
     public String getName() {

@@ -1,10 +1,9 @@
 package com.wrbug.datafinder.server.api
 
-import com.wrbug.datafinder.server.download.DownloadCache
+import com.wrbug.datafinder.server.download.FileCache
 import com.yanzhenjie.andserver.annotation.*
 import com.yanzhenjie.andserver.framework.body.FileBody
 import com.yanzhenjie.andserver.http.HttpResponse
-import java.io.File
 import java.lang.Exception
 
 
@@ -32,7 +31,7 @@ class DownloadController {
         } catch (e: Exception) {
             throw Exception("下载地址不存在")
         }
-        val file = DownloadCache.getFile(id) ?: throw Exception("下载地址不存在")
+        val file = FileCache.getFile(id) ?: throw Exception("下载地址不存在")
         if (file.isFile.not() || file.canRead().not()) {
             throw Exception("${fileName}无法下载")
         }
