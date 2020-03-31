@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  *  class: ServerManager.kt
  *  author: wrbug
  *  date: 2019-12-29
- *  description：
+ *  description:
  *
  */
 class ServerManager {

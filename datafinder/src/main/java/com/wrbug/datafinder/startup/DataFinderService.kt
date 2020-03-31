@@ -25,7 +25,7 @@ import kotlin.concurrent.thread
  *  class: DataFinderService.kt
  *  author: wrbug
  *  date: 2019-12-30
- *  description：
+ *  description:
  *
  */
 class DataFinderService : Service() {

@@ -14,7 +14,7 @@ import java.io.File;
  * class: FileInfo
  * author: wrbug
  * date: 2019-12-30
- * description：
+ * description:
  */
 public class FileInfo extends BaseFileInfo {
     @SerializedName("readable")

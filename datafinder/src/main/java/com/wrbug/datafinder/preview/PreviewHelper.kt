@@ -7,7 +7,7 @@ import java.io.File
  *  class: PreviewHelper.kt
  *  author: wrbug
  *  date: 2020-01-05
- *  description：
+ *  description:
  *
  */
 interface PreviewHelper<T> {

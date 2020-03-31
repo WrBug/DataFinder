@@ -13,7 +13,7 @@ import com.yanzhenjie.andserver.http.HttpResponse
  *  class: CookieInterceptor.kt
  *  author: wrbug
  *  date: 2020-01-20
- *  description：
+ *  description:
  *
  */
 @Interceptor

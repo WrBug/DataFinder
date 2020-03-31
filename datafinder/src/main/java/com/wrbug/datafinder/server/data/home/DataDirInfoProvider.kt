@@ -11,7 +11,7 @@ import java.io.File
  *  class: DataDirInfoProvider.kt
  *  author: wrbug
  *  date: 2020-01-04
- *  description：
+ *  description:
  *
  */
 class DataDirInfoProvider : HomeInfoProvider {

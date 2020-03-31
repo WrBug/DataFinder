@@ -14,7 +14,7 @@ import com.yanzhenjie.andserver.http.HttpResponse
  *  class: WebCrosInterceptorptor.kt
  *  author: wrbug
  *  date: 2020-01-04
- *  description：
+ *  description:
  *
  */
 @Interceptor

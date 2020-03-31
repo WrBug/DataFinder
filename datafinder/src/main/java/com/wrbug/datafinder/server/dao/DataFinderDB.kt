@@ -8,7 +8,7 @@ import com.wrbug.datafinder.data.GlobalEnv
  *  class: DataFinderDB.kt
  *  author: wrbug
  *  date: 2020-01-09
- *  description：
+ *  description:
  *
  */
 object DataFinderDB {

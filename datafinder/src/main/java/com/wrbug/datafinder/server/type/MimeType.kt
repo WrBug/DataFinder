@@ -8,7 +8,7 @@ import java.io.File
  *  class: IconType.kt
  *  author: wrbug
  *  date: 2020-01-04
- *  description：
+ *  description:
  *
  */
 @Keep

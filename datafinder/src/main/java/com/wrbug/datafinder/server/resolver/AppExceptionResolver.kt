@@ -15,7 +15,7 @@ import com.yanzhenjie.andserver.http.HttpResponse
  *  class: AppExceptionResolver.kt
  *  author: wrbug
  *  date: 2020-01-06
- *  description：
+ *  description:
  *
  */
 @Resolver

@@ -15,7 +15,7 @@ import java.util.List;
  * class: DirectoryInfo
  * author: wrbug
  * date: 2019-12-30
- * description：
+ * description:
  */
 public class DirectoryInfo extends BaseFileInfo {
     @SerializedName("info")

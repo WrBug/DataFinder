@@ -11,7 +11,7 @@ import java.io.File
  *  class: WebController.kt
  *  author: wrbug
  *  date: 2019-12-29
- *  description：
+ *  description:
  *
  */
 class WebController(private val context: Context?) : StorageWebsite(getPath(context)) {

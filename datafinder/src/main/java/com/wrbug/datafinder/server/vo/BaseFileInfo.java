@@ -12,7 +12,7 @@ import java.io.File;
  * class: BaseFileInfo
  * author: wrbug
  * date: 2019-12-30
- * description：
+ * description:
  */
 public abstract class BaseFileInfo implements IFileInfo {
     @SerializedName("name")
