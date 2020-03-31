@@ -1,0 +1,3 @@
+[submodule "Android-Debug-Database"]
+	path = Android-Debug-Database
+	url = https://github.com/WrBug/Android-Debug-Database.git

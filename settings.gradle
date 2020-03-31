@@ -1,2 +1,16 @@
 include ':app', ':datafinder'
+include 'db-preview'
+project(':db-preview').projectDir =file("$rootDir/Android-Debug-Database/sample-app")
+include 'db-preview-encrypt'
+project(':db-preview-encrypt').projectDir =file("$rootDir/Android-Debug-Database/sample-app-encrypt")
+
+include 'debug-db'
+project(':debug-db').projectDir =file("$rootDir/Android-Debug-Database/debug-db")
+
+include'debug-db-base'
+project(':debug-db-base').projectDir =file("$rootDir/Android-Debug-Database/debug-db-base")
+
+include'debug-db-encrypt'
+project(':debug-db-encrypt').projectDir =file("$rootDir/Android-Debug-Database/debug-db-encrypt")
+
 rootProject.name='DataFinder'
