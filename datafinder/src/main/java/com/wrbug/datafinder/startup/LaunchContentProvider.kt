@@ -1,9 +1,11 @@
 package com.wrbug.datafinder.startup
 
+import android.app.Activity
+import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.net.Uri
-import android.util.Log
+import android.os.Bundle
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.data.GlobalEnv
 import com.wrbug.datafinder.util.FlexibleToastUtils
@@ -17,9 +19,46 @@ class LaunchContentProvider : ContentProvider() {
         GlobalEnv.init(context.applicationContext)
         FlexibleToastUtils.init(context.applicationContext)
         ConfigDataManager.init(context.applicationContext)
-        DataFinderService.start(context)
+        (context.applicationContext as? Application)?.registerActivityLifecycleCallbacks(callback)
         return true
     }
+
+    private val callback = object : Application.ActivityLifecycleCallbacks {
+        var started = false
+        override fun onActivityPaused(activity: Activity?) {
+
+        }
+
+        override fun onActivityResumed(activity: Activity?) {
+            if (started) {
+                return
+            }
+            //修复部分 android8.0/8.1 android.app.RemoteServiceException: Context.startForegroundService() did not then call Service.startForeground()
+            DataFinderService.start(activity?.applicationContext)
+            removeCallback()
+        }
+
+        override fun onActivityStarted(activity: Activity?) {
+        }
+
+        override fun onActivityDestroyed(activity: Activity?) {
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
+        }
+
+        override fun onActivityStopped(activity: Activity?) {
+        }
+
+        override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+        }
+
+    }
+
+    private fun removeCallback() {
+        (context?.applicationContext as? Application)?.unregisterActivityLifecycleCallbacks(callback)
+    }
+
     override fun query(
         uri: Uri, projection: Array<String>?, selection: String?,
         selectionArgs: Array<String>?, sortOrder: String?

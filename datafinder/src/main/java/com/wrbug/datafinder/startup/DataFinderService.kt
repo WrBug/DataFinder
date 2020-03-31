@@ -35,7 +35,10 @@ class DataFinderService : Service() {
         private const val ACTION_RESTART_SERVER = "ACTION_RESTART_SERVER"
         private const val ACTION_STOP_SERVER = "ACTION_STOP_SERVER"
         private const val CHANNEL_ID = "DEMON"
-        fun start(context: Context) {
+        fun start(context: Context?) {
+            if (context == null) {
+                return
+            }
             if (Build.VERSION.SDK_INT >= 26) {//Android8.0
                 context.startForegroundService(Intent(context, DataFinderService::class.java))
             } else {

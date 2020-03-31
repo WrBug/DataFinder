@@ -21,6 +21,8 @@ file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.1
 file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib/src/unmodifiable_wrappers.dart
 file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib/src/utils.dart
 file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.14.11/lib/src/wrappers.dart
+file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.8/lib/adapter_browser.dart
+file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.8/lib/browser_imp.dart
 file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.8/lib/dio.dart
 file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.8/lib/src/adapter.dart
 file:///Users/wrbug/flutter/.pub-cache/hosted/pub.dartlang.org/dio-3.0.8/lib/src/adapters/browser_adapter.dart
@@ -684,11 +686,18 @@ file:///Users/wrbug/flutter_project/data_finder_web/lib/model/entity/base_file_i
 file:///Users/wrbug/flutter_project/data_finder_web/lib/model/entity/directory_info.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/model/entity/file_info.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/model/entity/home_info.dart
+file:///Users/wrbug/flutter_project/data_finder_web/lib/model/entity/preview_info.dart
+file:///Users/wrbug/flutter_project/data_finder_web/lib/model/type/mime_type.dart
+file:///Users/wrbug/flutter_project/data_finder_web/lib/model/type/type_utils.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/network/api.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/network/http_utils.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/network/response_data.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/page/directory_info_page.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/page/file_info_page.dart
+file:///Users/wrbug/flutter_project/data_finder_web/lib/preview/database_previw_provider.dart
+file:///Users/wrbug/flutter_project/data_finder_web/lib/preview/preview_manager.dart
+file:///Users/wrbug/flutter_project/data_finder_web/lib/preview/preview_provider.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/util/download_manager.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/util/icon_utils.dart
 file:///Users/wrbug/flutter_project/data_finder_web/lib/util/toast_utils.dart
+file:///Users/wrbug/flutter_project/data_finder_web/lib/util/window_manager.dart

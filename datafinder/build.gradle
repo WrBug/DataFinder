@@ -51,7 +51,7 @@ publish {
     userOrg = 'wrbug'
     groupId = 'com.wrbug'
     artifactId = 'datafinder'
-    publishVersion = '0.1.2.3'
+    publishVersion = lib_version
     desc = ''
     website = 'https://github.com/wrbug/datafinder'
 }

@@ -8,6 +8,7 @@ import com.wrbug.datafinder.server.data.home.HomeInfoListProvider
 import com.wrbug.datafinder.server.download.FileCache
 import com.wrbug.datafinder.server.type.FileType
 import com.wrbug.datafinder.server.type.IconType
+import com.wrbug.datafinder.server.type.MimeType
 import com.wrbug.datafinder.server.vo.*
 import com.yanzhenjie.andserver.annotation.RequestMapping
 import com.yanzhenjie.andserver.annotation.RequestMethod
@@ -68,8 +69,9 @@ class FileController {
     fun getFilePreview(@RequestParam("id") fileId: String, httpRequest: HttpRequest): FilePreviewInfo {
         val file = FileCache.getFile(fileId.toInt()) ?: throw Exception("获取文件错误")
         val info = FilePreviewInfo()
-        info.type = IconType.get(file)
+        info.mimeType = MimeType.get(file)
         info.raw = PreviewManager.getRaw(file)
+        info.formatData = PreviewManager.getPreviewResult(file)
         return info
     }
 

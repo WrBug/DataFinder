@@ -32,7 +32,7 @@ class DataDirInfoProvider : HomeInfoProvider {
 
     private fun buildDataDataDirInfo() = HomeInfoVo().apply {
         name = "data"
-        icon = IconType.Dir
+        iconType = IconType.Dir
         path = dataDir
     }
 
@@ -40,24 +40,24 @@ class DataDirInfoProvider : HomeInfoProvider {
         val dir = File(applicationInfo.sourceDir).parentFile
         name = "app"
         setPath(dir)
-        icon = IconType.Dir
+        iconType = IconType.Dir
     }
 
     private fun buildApkDirInfo() = HomeInfoVo().apply {
         name = "${GlobalEnv.getAppName()}安装包"
         path = applicationInfo.sourceDir
-        icon = IconType.Apk
+        iconType = IconType.Apk
     }
 
     private fun buildSharedPreferenceInfo() = HomeInfoVo().apply {
         name = "SharedPreference"
-        icon = IconType.Xml
+        iconType = IconType.Xml
         setPath(File(dataDir, "shared_prefs"))
     }
 
     private fun buildDatabaseInfo() = HomeInfoVo().apply {
         name = "数据库"
         setPath(File(dataDir, "databases"))
-        icon = IconType.Database
+        iconType = IconType.Database
     }
 }

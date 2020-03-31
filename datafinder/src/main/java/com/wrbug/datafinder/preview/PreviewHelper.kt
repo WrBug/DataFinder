@@ -14,4 +14,6 @@ interface PreviewHelper<T> {
     fun match(file: File): Boolean
 
     fun getRaw(file: File): String
+
+    fun getPreviewResult(file: File): T? = null
 }
