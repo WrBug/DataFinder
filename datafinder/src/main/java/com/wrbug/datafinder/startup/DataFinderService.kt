@@ -6,7 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.os.*
+import android.os.Build
+import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.wrbug.datafinder.R
@@ -16,7 +17,6 @@ import com.wrbug.datafinder.server.ServerStatus
 import com.wrbug.datafinder.server.ServerStatusListener
 import com.wrbug.datafinder.ui.SettingActivity
 import com.wrbug.datafinder.util.NetWorkUtils
-import java.lang.Exception
 import kotlin.concurrent.thread
 
 
@@ -99,6 +99,7 @@ class DataFinderService : Service() {
     private fun startServer() {
         thread {
             ServerManager.instance.startServer()
+//            DebugDB.initialize(this, DebugDBFactory(), ConfigDataManager.getDatabaseServerPort())
         }
     }
 

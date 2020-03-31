@@ -38,7 +38,22 @@
                     android:id="@+id/portSettingEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="端口设置"
+                    android:hint="DataFinder端口设置"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:textColor="@color/colorPrimary" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/databasePortSettingEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Database端口设置"
                     android:inputType="number"
                     android:maxLength="5"
                     android:textColor="@color/colorPrimary" />
