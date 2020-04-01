@@ -7,14 +7,17 @@ apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.1"
-
-
+    sourceSets {
+        main {
+            assets.srcDirs = ["$rootDir/data-finder-web/build"]
+        }
+    }
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
+        buildConfigField "String", "LIB_VERSION", "\"$lib_version\""
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -40,6 +43,45 @@ tasks.withType(Javadoc) {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
+
+
+android.libraryVariants.all { variant ->
+    def taskName = variant.name
+    tasks.all {
+        it.doFirst {
+            println "libraryVariants tasks：" + it.name
+        }
+        if ("generate${taskName.capitalize()}Assets".equalsIgnoreCase(it.name)) {
+            it.doFirst {
+                def file = new File(rootDir, "data-finder-web/build/web")
+                def dst = new File(rootDir, "data-finder-web/build/datafinder-web")
+                println "构建web目录"
+                exec {
+                    workingDir rootDir
+                    commandLine 'sh', './buildWeb.sh'
+                }
+                if (dst.exists()) {
+                    println "删除datafinder-web目录"
+                    deleteFile(dst)
+                }
+                file.renameTo(dst)
+
+            }
+        }
+    }
+}
+
+def deleteFile(File file) {
+    if (file.isFile()) {
+        file.delete()
+        return
+    }
+    file.listFiles().each {
+        deleteFile(it)
+    }
+    file.delete()
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

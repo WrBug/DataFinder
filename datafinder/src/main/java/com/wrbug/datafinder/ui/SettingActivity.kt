@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import com.wrbug.datafinder.BuildConfig
 import com.wrbug.datafinder.R
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.data.GlobalEnv
@@ -25,9 +26,11 @@ class SettingActivity : AppCompatActivity(), ServerStatusListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
+        setSupportActionBar(toolBar)
         originServerPort = ConfigDataManager.getServerPort()
         originDatabaseServerPort = ConfigDataManager.getDatabaseServerPort()
         portSettingEt.setText(originServerPort.toString())
+        versionTv.text = "版本号：${BuildConfig.LIB_VERSION}"
         databasePortSettingEt.setText(originDatabaseServerPort.toString())
         ServerManager.instance.addListener(this)
         portSettingEt.addTextChangedListener(watcher)
