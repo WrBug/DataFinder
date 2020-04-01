@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation project(':debug-db-encrypt')
+//    implementation('com.wrbug.datafinder:debug-db-encrypt:0.1.2.5')
+
 }
 
 publish {
