@@ -6,7 +6,7 @@ package com.wrbug.datafinder.server
  *  class: ResponseData.kt
  *  author: wrbug
  *  date: 2019-12-29
- *  description：
+ *  description:
  *
  */
 class ResponseData {

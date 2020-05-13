@@ -8,7 +8,7 @@ import java.io.File
  *  class: DatabasePreviewHelper.kt
  *  author: wrbug
  *  date: 2020-01-05
- *  description：
+ *  description:
  *
  */
 class XmlPreviewHelper : PreviewHelper<Any> {

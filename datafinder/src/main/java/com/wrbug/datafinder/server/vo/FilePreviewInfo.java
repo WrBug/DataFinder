@@ -1,22 +1,23 @@
 package com.wrbug.datafinder.server.vo;
 
 import com.google.gson.annotations.SerializedName;
-import com.wrbug.datafinder.server.type.IconType;
+import com.wrbug.datafinder.server.type.MimeType;
 
 public class FilePreviewInfo {
-    @SerializedName("type")
-    private IconType type;
+    @SerializedName("mimeType")
+    private MimeType mimeType;
     @SerializedName("raw")
     private String raw;
     @SerializedName("formatData")
     private Object formatData;
 
-    public IconType getType() {
-        return type;
+
+    public MimeType getMimeType() {
+        return mimeType;
     }
 
-    public void setType(IconType type) {
-        this.type = type;
+    public void setMimeType(MimeType mimeType) {
+        this.mimeType = mimeType;
     }
 
     public String getRaw() {

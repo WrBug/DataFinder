@@ -8,7 +8,7 @@ import com.wrbug.datafinder.server.vo.HomeInfoVo
  *  class: HomeInfoListProvider.kt
  *  author: wrbug
  *  date: 2020-01-04
- *  description：
+ *  description:
  *
  */
 class HomeInfoListProvider : HomeInfoProvider {

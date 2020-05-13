@@ -5,7 +5,7 @@ package com.wrbug.datafinder.server
  *  class: ServerStatusListener.kt
  *  author: wrbug
  *  date: 2020-01-05
- *  description：
+ *  description:
  *
  */
 interface ServerStatusListener {

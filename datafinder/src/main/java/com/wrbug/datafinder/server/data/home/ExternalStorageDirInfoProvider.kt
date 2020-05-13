@@ -13,7 +13,7 @@ import java.io.File
  *  class: ExternalStorageDirInfoProvider.kt
  *  author: wrbug
  *  date: 2020-01-04
- *  description：
+ *  description:
  *
  */
 class ExternalStorageDirInfoProvider : HomeInfoProvider {
@@ -27,14 +27,14 @@ class ExternalStorageDirInfoProvider : HomeInfoProvider {
     private fun buildDataInfo() = HomeInfoVo().apply {
         val sdCard = GlobalEnv.appContext.externalCacheDir?.parentFile
         name = "Data"
-        icon = IconType.Dir
+        iconType = IconType.Dir
         setPath(sdCard)
     }
 
     private fun buildSdcardInfo() = HomeInfoVo().apply {
         val sdCard = getSdcardDir()
         name = "内部存储"
-        icon = IconType.SdCard
+        iconType = IconType.SdCard
         setPath(sdCard)
     }
 

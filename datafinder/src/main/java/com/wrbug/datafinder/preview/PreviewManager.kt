@@ -27,4 +27,14 @@ object PreviewManager {
         }
         return ""
     }
+
+    @JvmStatic
+    fun getPreviewResult(file: File): Any? {
+        list.forEach {
+            if (it.match(file)) {
+                return it.getPreviewResult(file)
+            }
+        }
+        return null
+    }
 }

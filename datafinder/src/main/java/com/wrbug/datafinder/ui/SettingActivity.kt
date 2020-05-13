@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import com.wrbug.datafinder.BuildConfig
 import com.wrbug.datafinder.R
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.data.GlobalEnv
@@ -21,31 +22,40 @@ class SettingActivity : AppCompatActivity(), ServerStatusListener {
     private var startMenu: MenuItem? = null
     private var stopMenu: MenuItem? = null
     private var originServerPort: Int = 0
+    private var originDatabaseServerPort = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
+        setSupportActionBar(toolBar)
         originServerPort = ConfigDataManager.getServerPort()
+        originDatabaseServerPort = ConfigDataManager.getDatabaseServerPort()
         portSettingEt.setText(originServerPort.toString())
+        versionTv.text = "版本号：${BuildConfig.LIB_VERSION}"
+        databasePortSettingEt.setText(originDatabaseServerPort.toString())
         ServerManager.instance.addListener(this)
-        portSettingEt.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                try {
-                    val port = s.toString().toInt()
-                    saveMenu?.isVisible = port != originServerPort
-                } finally {
-
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-        })
+        portSettingEt.addTextChangedListener(watcher)
+        databasePortSettingEt.addTextChangedListener(watcher)
     }
 
+    private val watcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            try {
+                val port = portSettingEt.text.toString().toInt()
+                val databasePort = databasePortSettingEt.text.toString().toInt()
+                saveMenu?.isVisible =
+                    (port != originServerPort) || (originDatabaseServerPort != databasePort)
+            } finally {
+
+            }
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+    }
 
     override fun onDestroy() {
         ServerManager.instance.removeListener(this)
@@ -86,8 +96,11 @@ class SettingActivity : AppCompatActivity(), ServerStatusListener {
 
     private fun saveSetting() {
         val port = portSettingEt.text.toString().toInt()
+        val databasePort = databasePortSettingEt.text.toString().toInt()
         ConfigDataManager.saveServerPort(port)
+        ConfigDataManager.saveDatabaseServerPort(databasePort)
         originServerPort = port
+        originDatabaseServerPort = databasePort
         saveMenu?.isVisible = false
         showToast("保存成功")
         DataFinderService.restartServer(this)

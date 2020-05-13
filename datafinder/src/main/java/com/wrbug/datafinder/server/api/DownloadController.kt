@@ -12,7 +12,7 @@ import java.lang.Exception
  *  class: DownloadController.kt
  *  author: wrbug
  *  date: 2020-01-05
- *  description：
+ *  description:
  *
  */
 @Controller

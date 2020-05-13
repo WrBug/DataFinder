@@ -11,7 +11,7 @@ import java.io.File
  *  class: AppConfig.kt
  *  author: wrbug
  *  date: 2019-12-29
- *  description：web服务器配置
+ *  description: web服务器配置
  *
  */
 

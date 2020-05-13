@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">@android:color/white</item> <!--  敲定颜色-->
+    </style>
+    <style name="DataFinder.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="colorPrimary">@color/dataFinderColorPrimary</item>
+        <item name="colorPrimaryDark">@color/dataFinderColorPrimaryDark</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorAccent">@color/dataFinderColorAccent</item>
+    </style>
+</resources>

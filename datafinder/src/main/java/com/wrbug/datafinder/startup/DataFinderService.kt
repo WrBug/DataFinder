@@ -6,7 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.os.*
+import android.os.Build
+import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.wrbug.datafinder.R
@@ -16,7 +17,6 @@ import com.wrbug.datafinder.server.ServerStatus
 import com.wrbug.datafinder.server.ServerStatusListener
 import com.wrbug.datafinder.ui.SettingActivity
 import com.wrbug.datafinder.util.NetWorkUtils
-import java.lang.Exception
 import kotlin.concurrent.thread
 
 
@@ -25,7 +25,7 @@ import kotlin.concurrent.thread
  *  class: DataFinderService.kt
  *  author: wrbug
  *  date: 2019-12-30
- *  description：
+ *  description:
  *
  */
 class DataFinderService : Service() {
@@ -35,7 +35,10 @@ class DataFinderService : Service() {
         private const val ACTION_RESTART_SERVER = "ACTION_RESTART_SERVER"
         private const val ACTION_STOP_SERVER = "ACTION_STOP_SERVER"
         private const val CHANNEL_ID = "DEMON"
-        fun start(context: Context) {
+        fun start(context: Context?) {
+            if (context == null) {
+                return
+            }
             if (Build.VERSION.SDK_INT >= 26) {//Android8.0
                 context.startForegroundService(Intent(context, DataFinderService::class.java))
             } else {
@@ -99,6 +102,7 @@ class DataFinderService : Service() {
     private fun startServer() {
         thread {
             ServerManager.instance.startServer()
+//            DebugDB.initialize(this, DebugDBFactory(), ConfigDataManager.getDatabaseServerPort())
         }
     }
 

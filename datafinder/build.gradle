@@ -7,14 +7,17 @@ apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.1"
-
-
+    sourceSets {
+        main {
+            assets.srcDirs = ["$rootDir/web-assets"]
+        }
+    }
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
+        buildConfigField "String", "LIB_VERSION", "\"$lib_version\""
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -24,6 +27,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 
 }
 
@@ -32,11 +38,47 @@ greendao {
     schemaVersion 1
     daoPackage 'com.wrbug.datafinder.server.dao'
 }
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+
+android.libraryVariants.all { variant ->
+    def taskName = variant.name
+    tasks.all {
+        it.doFirst {
+            println "libraryVariants tasks：" + it.name
+        }
+        if ("generate${taskName.capitalize()}Assets".equalsIgnoreCase(it.name)) {
+            it.doFirst {
+                println "构建datafinder-flutter-web目录"
+                exec {
+                    workingDir rootDir
+                    commandLine 'sh', './build-datafinder-flutter-web.sh'
+                }
+            }
+        }
+    }
+}
+
+def deleteFile(File file) {
+    if (file.isFile()) {
+        file.delete()
+        return
+    }
+    file.listFiles().each {
+        deleteFile(it)
+    }
+    file.delete()
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-annotations:26.1.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     testImplementation 'junit:junit:4.12'
@@ -44,13 +86,16 @@ dependencies {
     kapt 'com.yanzhenjie.andserver:processor:2.0.5'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.greenrobot:greendao:3.2.2'
+    implementation project(':debug-db-encrypt')
+//    implementation('com.wrbug.datafinder:debug-db-encrypt:0.1.2.5')
+
 }
 
 publish {
     userOrg = 'wrbug'
     groupId = 'com.wrbug'
     artifactId = 'datafinder'
-    publishVersion = '0.1.2.3'
+    publishVersion = lib_version
     desc = ''
     website = 'https://github.com/wrbug/datafinder'
 }

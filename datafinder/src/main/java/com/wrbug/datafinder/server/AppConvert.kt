@@ -17,7 +17,7 @@ import java.nio.charset.Charset
  *  class: AppConvert.kt
  *  author: wrbug
  *  date: 2019-12-29
- *  description：
+ *  description:
  *
  */
 @Converter

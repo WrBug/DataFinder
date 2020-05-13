@@ -12,20 +12,19 @@ import java.io.File
  *
  */
 @Keep
-enum class IconType {
-    SdCard,
+enum class MimeType {
+    Unknown,
     Database,
     Xml,
-    Dir,
     Apk,
     FILE,
     ;
 
     companion object {
         @JvmStatic
-        fun get(file: File): IconType {
+        fun get(file: File): MimeType {
             if (file.isDirectory) {
-                return Dir
+                return Unknown
             }
             val fileName = file.name.toLowerCase()
             return when {

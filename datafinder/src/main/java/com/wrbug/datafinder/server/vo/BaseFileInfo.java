@@ -12,7 +12,7 @@ import java.io.File;
  * class: BaseFileInfo
  * author: wrbug
  * date: 2019-12-30
- * description：
+ * description:
  */
 public abstract class BaseFileInfo implements IFileInfo {
     @SerializedName("name")
@@ -20,8 +20,8 @@ public abstract class BaseFileInfo implements IFileInfo {
     protected transient File file;
     @SerializedName("path")
     protected String path;
-    @SerializedName("type")
-    protected IconType type;
+    @SerializedName("iconType")
+    protected IconType iconType;
     @SerializedName("fileType")
     protected FileType fileType;
 
@@ -29,7 +29,7 @@ public abstract class BaseFileInfo implements IFileInfo {
         this.file = path;
         this.name = path.getName();
         this.path = file.getAbsolutePath();
-        type = IconType.get(path);
+        iconType = IconType.get(path);
         fileType = path.isFile() ? FileType.FILE : FileType.DIRECTORY;
     }
 
@@ -67,11 +67,11 @@ public abstract class BaseFileInfo implements IFileInfo {
         this.path = path;
     }
 
-    public IconType getType() {
-        return type;
+    public IconType getIconType() {
+        return iconType;
     }
 
-    public void setType(IconType type) {
-        this.type = type;
+    public void setIconType(IconType iconType) {
+        this.iconType = iconType;
     }
 }

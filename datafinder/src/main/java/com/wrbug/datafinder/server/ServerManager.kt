@@ -2,6 +2,8 @@ package com.wrbug.datafinder.server
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.amitshekhar.DebugDB
+import com.amitshekhar.debug.encrypt.sqlite.DebugDBEncryptFactory
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.yanzhenjie.andserver.AndServer
 import com.yanzhenjie.andserver.Server
@@ -15,7 +17,7 @@ import java.util.concurrent.TimeUnit
  *  class: ServerManager.kt
  *  author: wrbug
  *  date: 2019-12-29
- *  description：
+ *  description:
  *
  */
 class ServerManager {
@@ -86,14 +88,19 @@ class ServerManager {
         if (!getServer().isRunning) {
             getServer().startup()
         }
+        DebugDB.initialize(
+            context,
+            DebugDBEncryptFactory(),
+            ConfigDataManager.getDatabaseServerPort()
+        )
         return this
     }
 
     fun stopServer() {
         if (getServer().isRunning) {
             getServer().shutdown()
-        } else {
         }
+        DebugDB.shutDown()
     }
 
     fun restartServer() {

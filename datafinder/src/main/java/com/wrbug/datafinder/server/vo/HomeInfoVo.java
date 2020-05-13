@@ -9,8 +9,8 @@ import java.io.File;
 public class HomeInfoVo {
     @SerializedName("name")
     private String name;
-    @SerializedName("icon")
-    private IconType icon;
+    @SerializedName("iconType")
+    private IconType iconType;
     @SerializedName("path")
     private String path;
     @SerializedName("fileType")
@@ -26,12 +26,12 @@ public class HomeInfoVo {
         this.name = name;
     }
 
-    public IconType getIcon() {
-        return icon;
+    public IconType getIconType() {
+        return iconType;
     }
 
-    public void setIcon(IconType icon) {
-        this.icon = icon;
+    public void setIconType(IconType iconType) {
+        this.iconType = iconType;
     }
 
     public String getPath() {

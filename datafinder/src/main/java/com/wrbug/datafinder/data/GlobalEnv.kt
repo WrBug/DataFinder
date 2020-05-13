@@ -12,7 +12,7 @@ import com.wrbug.datafinder.server.ServerStatusListener
  *  class: GlobalEnv.kt
  *  author: wrbug
  *  date: 2020-01-03
- *  description：
+ *  description:
  *
  */
 object GlobalEnv {

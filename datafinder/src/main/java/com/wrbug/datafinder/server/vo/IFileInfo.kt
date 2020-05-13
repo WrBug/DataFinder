@@ -7,7 +7,7 @@ import java.io.File
  *  class: IFileInfo.ktt
  *  author: wrbug
  *  date: 2019-12-30
- *  description：
+ *  description:
  *
  */
 interface IFileInfo {
