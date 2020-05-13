@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.1"
     sourceSets {
         main {
-            assets.srcDirs = ["$rootDir/data-finder-web/build"]
+            assets.srcDirs = ["$rootDir/web-assets"]
         }
     }
     defaultConfig {
@@ -53,19 +53,11 @@ android.libraryVariants.all { variant ->
         }
         if ("generate${taskName.capitalize()}Assets".equalsIgnoreCase(it.name)) {
             it.doFirst {
-                def file = new File(rootDir, "data-finder-web/build/web")
-                def dst = new File(rootDir, "data-finder-web/build/datafinder-web")
-                println "构建web目录"
+                println "构建datafinder-flutter-web目录"
                 exec {
                     workingDir rootDir
-                    commandLine 'sh', './buildWeb.sh'
+                    commandLine 'sh', './build-datafinder-flutter-web.sh'
                 }
-                if (dst.exists()) {
-                    println "删除datafinder-web目录"
-                    deleteFile(dst)
-                }
-                file.renameTo(dst)
-
             }
         }
     }
