@@ -16,43 +16,8 @@ import java.io.File
  */
 class WebController(private val context: Context?) : StorageWebsite(getPath(context)) {
     companion object {
-        private const val WEB_PATH = "datafinder-web"
+        private const val WEB_PATH = "datafinder-web/datafinder"
         private fun getPath(context: Context?): String =
-            File(context?.cacheDir, WEB_PATH).run {
-                forceDelete()
-                absolutePath
-            } ?: ""
-    }
-
-    init {
-        val list = getList(WEB_PATH)
-        val dir = getPath(context)
-        list.forEach {
-            val dst = if (it.startsWith("${WEB_PATH}/")) it.substring(WEB_PATH.length + 1) else it
-            context?.assets?.open(it)?.readBytes()?.let { data ->
-                File(dir, dst).apply {
-                    if (!parentFile.exists()) {
-                        parentFile.mkdirs()
-                    }
-                    writeBytes(data)
-                }
-            }
-        }
-    }
-
-    private fun getList(path: String): List<String> {
-        val list = ArrayList<String>()
-        context?.run {
-            assets.list(path)?.forEach {
-                val newPath = "$path/$it"
-                val l = getList(newPath)
-                if (l.isNotEmpty()) {
-                    list.addAll(l)
-                } else {
-                    list.add(newPath)
-                }
-            }
-        }
-        return list
+            File(context?.cacheDir, WEB_PATH).absolutePath
     }
 }
