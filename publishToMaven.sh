@@ -32,5 +32,6 @@ cd ${rootDir}'/data-finder-web'
 flutter clean
 echo '开始打包sdk'
 cd ${rootDir}
+rm -rf web-assets
 ./gradlew clean build bintrayUpload -PbintrayUser=${bintrayUser} -PbintrayKey=${bintrayKey} -PdryRun=false -PpublishVersion=${libVersion}
 echo '发布成功，版本号：'${libVersion}

@@ -6,9 +6,12 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.net.Uri
 import android.os.Bundle
+import com.amitshekhar.DebugDB
+import com.amitshekhar.utils.FileUtils
 import com.wrbug.datafinder.data.ConfigDataManager
 import com.wrbug.datafinder.data.GlobalEnv
 import com.wrbug.datafinder.util.FlexibleToastUtils
+import java.io.File
 
 class LaunchContentProvider : ContentProvider() {
 
@@ -16,7 +19,9 @@ class LaunchContentProvider : ContentProvider() {
     override fun getType(uri: Uri) = uri.scheme
     override fun insert(uri: Uri, values: ContentValues?) = uri
     override fun onCreate(): Boolean {
+        DebugDB.initialize(context.applicationContext)
         GlobalEnv.init(context.applicationContext)
+        FileUtils.assetsToFile("datafinder-web", File(context.cacheDir, "datafinder-web"))
         FlexibleToastUtils.init(context.applicationContext)
         ConfigDataManager.init(context.applicationContext)
         (context.applicationContext as? Application)?.registerActivityLifecycleCallbacks(callback)

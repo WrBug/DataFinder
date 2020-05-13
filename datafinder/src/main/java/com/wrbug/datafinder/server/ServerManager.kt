@@ -88,8 +88,7 @@ class ServerManager {
         if (!getServer().isRunning) {
             getServer().startup()
         }
-        DebugDB.initialize(
-            context,
+        DebugDB.start(
             DebugDBEncryptFactory(),
             ConfigDataManager.getDatabaseServerPort()
         )
