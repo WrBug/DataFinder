@@ -16,12 +16,17 @@ if [[ "$1" = 'release' ]]; then
     echo '启用release版本'
 else
     if [[ -f '.version' ]]; then
-        subVersion=`cat .version`
-        subVersion=$(($subVersion+1))
+        subVersion=`cat .version  | awk -F '|'   '{print $2}'`
+        mainVersion=`cat .version  | awk -F '|'   '{print $1}'`
+        if [[ "$mainVersion" = "$libVersion" ]]; then
+            subVersion=$(($subVersion+1))
+        else
+            subVersion=1
+        fi
     else
         subVersion=1
     fi
-    echo ${subVersion} > .version
+    echo "$libVersion|${subVersion}" > .version
     libVersion=${libVersion}'-'${subVersion}
 fi
 echo '构建版本:'${libVersion}
