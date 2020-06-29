@@ -1,5 +1,7 @@
 package com.wrbug.datafinder.server
 
+import com.google.gson.annotations.SerializedName
+
 
 /**
  *
@@ -10,9 +12,13 @@ package com.wrbug.datafinder.server
  *
  */
 class ResponseData {
+    @SerializedName("success")
     private var success: Boolean = false
+    @SerializedName("data")
     private var data: Any? = null
+    @SerializedName("message")
     private var message: String? = null
+    @SerializedName("code")
     private var code: Int? = null
 
     companion object {

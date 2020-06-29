@@ -27,7 +27,7 @@ else
         subVersion=1
     fi
     echo "$libVersion|${subVersion}" > .version
-    libVersion=${libVersion}'-'${subVersion}
+    libVersion=${libVersion}'-'${subVersion}'-SNAPSHOT'
 fi
 echo '构建版本:'${libVersion}
 echo 'bintrayKey='${bintrayKey}

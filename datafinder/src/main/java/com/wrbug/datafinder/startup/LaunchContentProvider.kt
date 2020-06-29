@@ -14,54 +14,21 @@ import com.wrbug.datafinder.util.FlexibleToastUtils
 import java.io.File
 
 class LaunchContentProvider : ContentProvider() {
+    companion object {
+        private var autolAunch = true
+        fun setAutoLaunch(auto: Boolean) {
+            autolAunch = auto
+        }
+    }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?) = 0
     override fun getType(uri: Uri) = uri.scheme
     override fun insert(uri: Uri, values: ContentValues?) = uri
     override fun onCreate(): Boolean {
-        DebugDB.initialize(context.applicationContext)
-        GlobalEnv.init(context.applicationContext)
-        FileUtils.assetsToFile("datafinder-web", File(context.cacheDir, "datafinder-web"))
-        FlexibleToastUtils.init(context.applicationContext)
-        ConfigDataManager.init(context.applicationContext)
-        (context.applicationContext as? Application)?.registerActivityLifecycleCallbacks(callback)
+        if (autolAunch) {
+            DataFinderLauncher.launch(context)
+        }
         return true
-    }
-
-    private val callback = object : Application.ActivityLifecycleCallbacks {
-        var started = false
-        override fun onActivityPaused(activity: Activity?) {
-
-        }
-
-        override fun onActivityResumed(activity: Activity?) {
-            if (started) {
-                return
-            }
-            //修复部分 android8.0/8.1 android.app.RemoteServiceException: Context.startForegroundService() did not then call Service.startForeground()
-            DataFinderService.start(activity?.applicationContext)
-            removeCallback()
-        }
-
-        override fun onActivityStarted(activity: Activity?) {
-        }
-
-        override fun onActivityDestroyed(activity: Activity?) {
-        }
-
-        override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
-        }
-
-        override fun onActivityStopped(activity: Activity?) {
-        }
-
-        override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-        }
-
-    }
-
-    private fun removeCallback() {
-        (context?.applicationContext as? Application)?.unregisterActivityLifecycleCallbacks(callback)
     }
 
     override fun query(
